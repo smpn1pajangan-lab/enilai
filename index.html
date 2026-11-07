@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Hasil TO TKA SMP 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Blogger Template Reset */
+        #content, .post-body, .entry-content, main {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .printable-area {
+            display: block;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <script>
+        // KONFIGURASI APLIKASI
+        // UBAH IS_PREVIEW KE false JIKA AKAN DI-DEPLOY KE BLOGGER
+        const IS_PREVIEW = false;
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwY_UxhI-HkKmsb_rWL19X80vajY0jQklBi0PVtV8AS1Ni-8refnsUlOTXgEDwCo0K8VQ/exec";
+
+        // DATA DUMMY UNTUK PREVIEW MODE
+        const DUMMY_DATA = [
+            {
+                nisn: "0081234567",
+                nama: "Ahmad Rizky Pratama",
+                sekolah: "SMP Negeri 1 Yogyakarta",
+                scores: {
+                    to1: { indo: 88, mat: 82, ing: 90, ipa: 85 },
+                    to2: { indo: 90, mat: 85, ing: 92, ipa: 88 },
+                    to3: { indo: 85, mat: 88, ing: 88, ipa: 90 },
+                    to4: { indo: 92, mat: 90, ing: 94, ipa: 92 },
+                    to5: { indo: 94, mat: 92, ing: 95, ipa: 94 }
+                }
+            },
+            {
+                nisn: "0087654321",
+                nama: "Siti Nurhaliza",
+                sekolah: "SMP Negeri 2 Sleman",
+                scores: {
+                    to1: { indo: 75, mat: 70, ing: 80, ipa: 78 },
+                    to2: { indo: 78, mat: 75, ing: 82, ipa: 80 },
+                    to3: { indo: 80, mat: 78, ing: 85, ipa: 82 },
+                    to4: { indo: 82, mat: 80, ing: 86, ipa: 85 },
+                    to5: { indo: 85, mat: 84, ing: 88, ipa: 88 }
+                }
+            }
+        ];
+    </script>
+
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('search')">
+                <div class="bg-indigo-700 p-2 rounded-lg">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-amber-400"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">HTO TKA SAPAYOTA 2026</h1>
+                    <p class="text-xs text-indigo-200">Portal Pengumuman Hasil Try Out</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <span id="previewBadge" class="hidden bg-amber-500 text-slate-900 text-xs px-2.5 py-1 rounded-full font-bold">
+                    <i class="fa-solid fa-flask mr-1"></i> Preview Mode
+                </span>
+                <button id="navAdminBtn" onclick="openLoginModal()" class="bg-indigo-800 hover:bg-indigo-700 text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition border border-indigo-600 flex items-center space-x-2">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Admin</span>
+                </button>
+                <button id="navLogoutBtn" onclick="logoutAdmin()" class="hidden bg-rose-600 hover:bg-rose-700 text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ALERTS -->
+        <div id="alertContainer" class="hidden mb-6 p-4 rounded-xl shadow-sm text-sm font-medium transition-all"></div>
+
+        <!-- TAB 1: SISWA SEARCH SECTION -->
+        <section id="searchSection" class="space-y-8">
+            <!-- HERO SEARCH BOX -->
+            <div class="bg-gradient-to-br from-indigo-700 to-purple-800 rounded-2xl p-6 sm:p-10 text-white shadow-xl text-center relative overflow-hidden">
+                <div class="max-w-2xl mx-auto relative z-10">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Cek Hasil TO TKA SMP NEGERI 1 PAJANGAN</h2>
+                    <p class="text-indigo-200 text-sm sm:text-base mb-6">Masukkan NISN (Nomor Induk Siswa Nasional) Anda untuk melihat transkrip hasil Try Out Tes Kemampuan Akademik.</p>
+                    
+                    <form onsubmit="handleSearch(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                        <div class="relative flex-grow">
+                            <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="nisnInput" placeholder="Masukkan 10 Digit NISN..." required
+                                class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-300 font-semibold text-lg shadow-inner">
+                        </div>
+                        <button type="submit" id="searchBtn"
+                            class="bg-amber-400 hover:bg-amber-300 text-indigo-950 font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Cari Hasil</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- RESULT CARD -->
+            <div id="resultCard" class="hidden bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="bg-slate-900 text-white p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <span class="bg-indigo-600 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider text-indigo-100">Transkrip Nilai TO TKA</span>
+                        <h3 id="resNama" class="text-2xl font-bold mt-2"></h3>
+                        <p id="resNisnSekolah" class="text-slate-300 text-sm mt-0.5"></p>
+                    </div>
+                    <button onclick="window.print()" class="no-print bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center space-x-2 border border-slate-700">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak Transkrip</span>
+                    </button>
+                </div>
+
+                <div id="printArea" class="p-6 space-y-6">
+                    <!-- TABLE SCORES -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-indigo-50 text-indigo-950 uppercase text-xs tracking-wider border-b border-indigo-200">
+                                    <th class="p-3.5 font-bold">Jenis Try Out TKA</th>
+                                    <th class="p-3.5 text-center font-bold">B. Indonesia</th>
+                                    <th class="p-3.5 text-center font-bold">Matematika</th>
+                                    <th class="p-3.5 text-center font-bold">B. Inggris</th>
+                                    <th class="p-3.5 text-center font-bold">IPA</th>
+                                    <th class="p-3.5 text-center font-bold bg-indigo-100">Total</th>
+                                    <th class="p-3.5 text-center font-bold bg-indigo-100">Rata-rata</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoresTableBody" class="divide-y divide-slate-200">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- SUMMARY CARDS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-100">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xs font-semibold text-slate-500 uppercase">Rata-Rata Tertinggi</span>
+                            <p id="maxAvgScore" class="text-2xl font-bold text-indigo-600 mt-1">0.00</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xs font-semibold text-slate-500 uppercase">Perkembangan Nilai</span>
+                            <p id="trendStatus" class="text-sm font-bold text-emerald-600 mt-2 flex items-center">
+                                <i class="fa-solid fa-chart-line mr-2"></i> Stable
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 sm:col-span-2">
+                            <span class="text-xs font-semibold text-slate-500 uppercase">Mata Pelajaran Unggulan</span>
+                            <p id="bestSubject" class="text-lg font-bold text-slate-800 mt-1">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ADMIN DASHBOARD -->
+        <section id="adminSection" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Kelola Data Siswa & Nilai TO TKA</h2>
+                    <p class="text-sm text-slate-500">Tambah, ubah, atau hapus data nilai siswa secara manual.</p>
+                </div>
+                <button onclick="openFormModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow transition flex items-center space-x-2 text-sm">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Tambah Data Siswa</span>
+                </button>
+            </div>
+
+            <!-- SEARCH & FILTER ADMIN -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-grow">
+                    <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="adminSearchInput" onkeyup="filterAdminTable()" placeholder="Cari NISN atau Nama Siswa..."
+                        class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+            </div>
+
+            <!-- ADMIN DATA TABLE -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                            <tr>
+                                <th class="p-4">NISN</th>
+                                <th class="p-4">Nama Siswa</th>
+                                <th class="p-4">Sekolah</th>
+                                <th class="p-4 text-center">Status Nilai</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-slate-200">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL 1: LOGIN ADMIN -->
+    <div id="loginModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-lg text-slate-900">Login Administrator</h3>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Username</label>
+                    <input type="text" id="loginUser" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
+                    <input type="password" id="loginPass" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl shadow transition text-sm">
+                    Masuk Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: FORM TAMBAH / EDIT DATA -->
+    <div id="formModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 my-8 space-y-6">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="formModalTitle" class="font-bold text-lg text-slate-900">Tambah Data Siswa & Nilai</h3>
+                <button onclick="closeFormModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form onsubmit="handleSaveSiswa(event)" class="space-y-6">
+                <input type="hidden" id="formIsEdit" value="false">
+                
+                <!-- BIODATA -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">NISN *</label>
+                        <input type="text" id="formNisn" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Siswa *</label>
+                        <input type="text" id="formNama" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Sekolah *</label>
+                        <input type="text" id="formSekolah" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- FORM SCORES TO -->
+                <div class="space-y-4 border-t pt-4">
+                    <h4 class="font-bold text-slate-800 text-sm">Input Nilai Try Out (0-100)</h4>
+                    
+                    <!-- REPEATABLE TO INPUTS -->
+                    <script>
+                        const TO_KEYS = [
+                            { key: 'to1', name: 'TO TKA MKKS 1' },
+                            { key: 'to2', name: 'TO TKA DIKPORA 1' },
+                            { key: 'to3', name: 'TO TKA MKKS 2' },
+                            { key: 'to4', name: 'TO TKA DIKPORA 2' },
+                            { key: 'to5', name: 'TO TKA MKKS DIY' }
+                        ];
+                    </script>
+
+                    <div id="toFormInputs" class="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 border-t pt-4">
+                    <button type="button" onclick="closeFormModal()" class="px-4 py-2 border rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // GLOBAL STATE
+        let currentSiswaList = [];
+        let isAdminLoggedIn = false;
+
+        window.onload = function() {
+            if (IS_PREVIEW) {
+                document.getElementById('previewBadge').classList.remove('hidden');
+                currentSiswaList = DUMMY_DATA;
+                renderAdminTable();
+            } else {
+                fetchSiswaData();
+            }
+            renderFormToInputs();
+        };
+
+        function showAlert(msg, type = 'info') {
+            const el = document.getElementById('alertContainer');
+            el.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'bg-indigo-100', 'text-indigo-800');
+            if (type === 'success') el.classList.add('bg-emerald-100', 'text-emerald-800');
+            else if (type === 'error') el.classList.add('bg-rose-100', 'text-rose-800');
+            else el.classList.add('bg-indigo-100', 'text-indigo-800');
+            el.innerHTML = msg;
+            setTimeout(() => el.classList.add('hidden'), 5000);
+        }
+
+        // TAB SWITCHING
+        function switchTab(tab) {
+            if (tab === 'admin' && !isAdminLoggedIn) {
+                openLoginModal();
+                return;
+            }
+            document.getElementById('searchSection').classList.toggle('hidden', tab !== 'search');
+            document.getElementById('adminSection').classList.toggle('hidden', tab !== 'admin');
+        }
+
+        // SEARCH SISWA
+        function handleSearch(e) {
+            e.preventDefault();
+            const nisn = document.getElementById('nisnInput').value.trim();
+            if (!nisn) return;
+
+            if (IS_PREVIEW) {
+                const found = currentSiswaList.find(s => s.nisn === nisn);
+                if (found) displayResult(found);
+                else showAlert("Data NISN tidak ditemukan dalam Pratinjau!", "error");
+            } else {
+                fetch(GAS_URL + "?action=getSiswaByNisn&nisn=" + encodeURIComponent(nisn))
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.success && res.data) displayResult(res.data);
+                        else showAlert(res.message || "Data NISN tidak ditemukan!", "error");
+                    })
+                    .catch(() => showAlert("Gagal terhubung ke Server GAS", "error"));
+            }
+        }
+
+        function displayResult(siswa) {
+            document.getElementById('resNama').innerText = siswa.nama;
+            document.getElementById('resNisnSekolah').innerText = `NISN: ${siswa.nisn} | ${siswa.sekolah}`;
+
+            const tbody = document.getElementById('scoresTableBody');
+            tbody.innerHTML = '';
+
+            let maxAvg = 0;
+            let totalScores = { indo: 0, mat: 0, ing: 0, ipa: 0 };
+            let count = 0;
+
+            const mapels = ['to1', 'to2', 'to3', 'to4', 'to5'];
+            const names = ['TO TKA MKKS 1', 'TO TKA DIKPORA 1', 'TO TKA MKKS 2', 'TO TKA DIKPORA 2', 'TO TKA MKKS DIY'];
+
+            mapels.forEach((key, idx) => {
+                const s = siswa.scores[key] || { indo: 0, mat: 0, ing: 0, ipa: 0 };
+                const total = s.indo + s.mat + s.ing + s.ipa;
+                const avg = total / 4;
+                if (avg > maxAvg) maxAvg = avg;
+
+                totalScores.indo += s.indo;
+                totalScores.mat += s.mat;
+                totalScores.ing += s.ing;
+                totalScores.ipa += s.ipa;
+                count++;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3.5 font-semibold text-slate-800">${names[idx]}</td>
+                        <td class="p-3.5 text-center">${s.indo}</td>
+                        <td class="p-3.5 text-center">${s.mat}</td>
+                        <td class="p-3.5 text-center">${s.ing}</td>
+                        <td class="p-3.5 text-center">${s.ipa}</td>
+                        <td class="p-3.5 text-center font-bold bg-slate-50">${total}</td>
+                        <td class="p-3.5 text-center font-bold text-indigo-600 bg-slate-50">${avg.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('maxAvgScore').innerText = maxAvg.toFixed(2);
+            
+            // MAPEL TERBAIK
+            let bestMapel = 'Bahasa Indonesia';
+            let maxVal = totalScores.indo;
+            if (totalScores.mat > maxVal) { bestMapel = 'Matematika'; maxVal = totalScores.mat; }
+            if (totalScores.ing > maxVal) { bestMapel = 'Bahasa Inggris'; maxVal = totalScores.ing; }
+            if (totalScores.ipa > maxVal) { bestMapel = 'IPA'; maxVal = totalScores.ipa; }
+            document.getElementById('bestSubject').innerText = `${bestMapel} (Total: ${maxVal})`;
+
+            document.getElementById('resultCard').classList.remove('hidden');
+        }
+
+        // LOGIN / LOGOUT
+        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUser').value;
+            const p = document.getElementById('loginPass').value;
+
+            if (IS_PREVIEW) {
+                if (u === 'admin' && p === 'edudigital') {
+                    isAdminLoggedIn = true;
+                    onLoginSuccess();
+                } else {
+                    showAlert("Username/Password Dummy Salah! (Gunakan: admin / edudigital)", "error");
+                }
+            } else {
+                fetch(GAS_URL + "?action=loginAdmin", {
+                    method: 'POST',
+                    body: JSON.stringify({ username: u, password: p })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        isAdminLoggedIn = true;
+                        onLoginSuccess();
+                    } else showAlert(res.message, "error");
+                });
+            }
+        }
+
+        function onLoginSuccess() {
+            closeLoginModal();
+            document.getElementById('navAdminBtn').classList.add('hidden');
+            document.getElementById('navLogoutBtn').classList.remove('hidden');
+            switchTab('admin');
+            showAlert("Berhasil Login Administrator!", "success");
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('navAdminBtn').classList.remove('hidden');
+            document.getElementById('navLogoutBtn').classList.add('hidden');
+            switchTab('search');
+            showAlert("Telah keluar dari Dashboard Admin.", "info");
+        }
+
+        // RENDER FORM TO INPUTS
+        function renderFormToInputs() {
+            const container = document.getElementById('toFormInputs');
+            container.innerHTML = '';
+            TO_KEYS.forEach((item) => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="block text-xs font-bold text-indigo-900 mb-2">${item.name}</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <div>
+                                <label class="block text-[10px] text-slate-500">B. Indo</label>
+                                <input type="number" id="${item.key}_indo" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-500">Matematika</label>
+                                <input type="number" id="${item.key}_mat" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-500">B. Inggris</label>
+                                <input type="number" id="${item.key}_ing" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-500">IPA</label>
+                                <input type="number" id="${item.key}_ipa" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // ADMIN TABLE & ACTIONS
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+            currentSiswaList.forEach(s => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-mono font-semibold">${s.nisn}</td>
+                        <td class="p-4 font-medium">${s.nama}</td>
+                        <td class="p-4 text-slate-500">${s.sekolah}</td>
+                        <td class="p-4 text-center">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Lengkap</span>
+                        </td>
+                        <td class="p-4 text-right space-x-2">
+                            <button onclick="editSiswa('${s.nisn}')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-xs border border-indigo-200 px-2.5 py-1 rounded-lg">Edit</button>
+                            <button onclick="deleteSiswa('${s.nisn}')" class="text-rose-600 hover:text-rose-900 font-semibold text-xs border border-rose-200 px-2.5 py-1 rounded-lg">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterAdminTable() {
+            const q = document.getElementById('adminSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#adminTableBody tr');
+            rows.forEach(r => {
+                const text = r.innerText.toLowerCase();
+                r.style.display = text.includes(q) ? '' : 'none';
+            });
+        }
+
+        function openFormModal(isEdit = false) {
+            document.getElementById('formIsEdit').value = isEdit;
+            document.getElementById('formModalTitle').innerText = isEdit ? 'Edit Data Siswa & Nilai' : 'Tambah Data Siswa & Nilai';
+            document.getElementById('formNisn').disabled = isEdit;
+            document.getElementById('formModal').classList.remove('hidden');
+        }
+
+        function closeFormModal() { document.getElementById('formModal').classList.add('hidden'); }
+
+        function editSiswa(nisn) {
+            const s = currentSiswaList.find(x => x.nisn === nisn);
+            if (!s) return;
+            document.getElementById('formNisn').value = s.nisn;
+            document.getElementById('formNama').value = s.nama;
+            document.getElementById('formSekolah').value = s.sekolah;
+
+            TO_KEYS.forEach(item => {
+                const sc = s.scores[item.key] || { indo: 0, mat: 0, ing: 0, ipa: 0 };
+                document.getElementById(`${item.key}_indo`).value = sc.indo;
+                document.getElementById(`${item.key}_mat`).value = sc.mat;
+                document.getElementById(`${item.key}_ing`).value = sc.ing;
+                document.getElementById(`${item.key}_ipa`).value = sc.ipa;
+            });
+
+            openFormModal(true);
+        }
+
+        function handleSaveSiswa(e) {
+            e.preventDefault();
+            const nisn = document.getElementById('formNisn').value;
+            const nama = document.getElementById('formNama').value;
+            const sekolah = document.getElementById('formSekolah').value;
+            const isEdit = document.getElementById('formIsEdit').value === 'true';
+
+            const scores = {};
+            TO_KEYS.forEach(item => {
+                scores[item.key] = {
+                    indo: parseFloat(document.getElementById(`${item.key}_indo`).value) || 0,
+                    mat: parseFloat(document.getElementById(`${item.key}_mat`).value) || 0,
+                    ing: parseFloat(document.getElementById(`${item.key}_ing`).value) || 0,
+                    ipa: parseFloat(document.getElementById(`${item.key}_ipa`).value) || 0
+                };
+            });
+
+            const payload = { nisn, nama, sekolah, scores };
+
+            if (IS_PREVIEW) {
+                if (isEdit) {
+                    const idx = currentSiswaList.findIndex(x => x.nisn === nisn);
+                    if (idx !== -1) currentSiswaList[idx] = payload;
+                } else {
+                    currentSiswaList.push(payload);
+                }
+                renderAdminTable();
+                closeFormModal();
+                showAlert("Data berhasil disimpan (Preview Mode)", "success");
+            } else {
+                fetch(GAS_URL + "?action=saveSiswa", {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        fetchSiswaData();
+                        closeFormModal();
+                        showAlert("Data siswa berhasil disimpan!", "success");
+                    } else showAlert(res.message, "error");
+                });
+            }
+        }
+
+        function deleteSiswa(nisn) {
+            if (!confirm(`Yakin ingin menghapus data siswa NISN: ${nisn}?`)) return;
+
+            if (IS_PREVIEW) {
+                currentSiswaList = currentSiswaList.filter(x => x.nisn !== nisn);
+                renderAdminTable();
+                showAlert("Data siswa berhasil dihapus (Preview Mode)", "info");
+            } else {
+                fetch(GAS_URL + "?action=deleteSiswa", {
+                    method: 'POST',
+                    body: JSON.stringify({ nisn })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        fetchSiswaData();
+                        showAlert("Data siswa dihapus!", "success");
+                    } else showAlert(res.message, "error");
+                });
+            }
+        }
+
+        function fetchSiswaData() {
+            fetch(GAS_URL + "?action=getAllSiswa")
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        currentSiswaList = res.data;
+                        renderAdminTable();
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

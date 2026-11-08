@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengumuman Hasil TO TKA SMP 2026</title>
+    <title>Pengumuman Hasil TO TKA SMP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -69,36 +69,15 @@
 
     <script>
         // KONFIGURASI APLIKASI
-        // UBAH IS_PREVIEW KE false JIKA AKAN DI-DEPLOY KE BLOGGER
-        const IS_PREVIEW = false;
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwY_UxhI-HkKmsb_rWL19X80vajY0jQklBi0PVtV8AS1Ni-8refnsUlOTXgEDwCo0K8VQ/exec";
+        // Tempelkan URL WebApp Google Apps Script (GAS) Anda di bawah ini
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzLGpAvnGosZTfGHG6lFX-WZdOz44YGpKKg3zuMRubuT9cp4ZqEwvYJOCn9Iy9EuJBl/exec";
 
-        // DATA DUMMY UNTUK PREVIEW MODE
-        const DUMMY_DATA = [
-            {
-                nisn: "0081234567",
-                nama: "Ahmad Rizky Pratama",
-                sekolah: "SMP Negeri 1 Yogyakarta",
-                scores: {
-                    to1: { indo: 88, mat: 82, ing: 90, ipa: 85 },
-                    to2: { indo: 90, mat: 85, ing: 92, ipa: 88 },
-                    to3: { indo: 85, mat: 88, ing: 88, ipa: 90 },
-                    to4: { indo: 92, mat: 90, ing: 94, ipa: 92 },
-                    to5: { indo: 94, mat: 92, ing: 95, ipa: 94 }
-                }
-            },
-            {
-                nisn: "0087654321",
-                nama: "Siti Nurhaliza",
-                sekolah: "SMP Negeri 2 Sleman",
-                scores: {
-                    to1: { indo: 75, mat: 70, ing: 80, ipa: 78 },
-                    to2: { indo: 78, mat: 75, ing: 82, ipa: 80 },
-                    to3: { indo: 80, mat: 78, ing: 85, ipa: 82 },
-                    to4: { indo: 82, mat: 80, ing: 86, ipa: 85 },
-                    to5: { indo: 85, mat: 84, ing: 88, ipa: 88 }
-                }
-            }
+        const TO_KEYS = [
+            { key: 'to1', name: 'TO TKA MKKS 1' },
+            { key: 'to2', name: 'TO TKA DIKPORA 1' },
+            { key: 'to3', name: 'TO TKA MKKS 2' },
+            { key: 'to4', name: 'TO TKA DIKPORA 2' },
+            { key: 'to5', name: 'TO TKA MKKS DIY' }
         ];
     </script>
 
@@ -109,15 +88,12 @@
                     <i class="fa-solid fa-graduation-cap text-2xl text-amber-400"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">HTO TKA SAPAYOTA 2026</h1>
+                    <h1 class="font-bold text-lg leading-tight">TO TKA SMP</h1>
                     <p class="text-xs text-indigo-200">Portal Pengumuman Hasil Try Out</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-3">
-                <span id="previewBadge" class="hidden bg-amber-500 text-slate-900 text-xs px-2.5 py-1 rounded-full font-bold">
-                    <i class="fa-solid fa-flask mr-1"></i> Preview Mode
-                </span>
                 <button id="navAdminBtn" onclick="openLoginModal()" class="bg-indigo-800 hover:bg-indigo-700 text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition border border-indigo-600 flex items-center space-x-2">
                     <i class="fa-solid fa-user-lock"></i>
                     <span>Admin</span>
@@ -140,7 +116,7 @@
             <!-- HERO SEARCH BOX -->
             <div class="bg-gradient-to-br from-indigo-700 to-purple-800 rounded-2xl p-6 sm:p-10 text-white shadow-xl text-center relative overflow-hidden">
                 <div class="max-w-2xl mx-auto relative z-10">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Cek Hasil TO TKA SMP NEGERI 1 PAJANGAN</h2>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Cek Hasil TO TKA SMP</h2>
                     <p class="text-indigo-200 text-sm sm:text-base mb-6">Masukkan NISN (Nomor Induk Siswa Nasional) Anda untuk melihat transkrip hasil Try Out Tes Kemampuan Akademik.</p>
                     
                     <form onsubmit="handleSearch(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
@@ -194,7 +170,7 @@
                     </div>
 
                     <!-- SUMMARY CARDS -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-100">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
                         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                             <span class="text-xs font-semibold text-slate-500 uppercase">Rata-Rata Tertinggi</span>
                             <p id="maxAvgScore" class="text-2xl font-bold text-indigo-600 mt-1">0.00</p>
@@ -204,10 +180,6 @@
                             <p id="trendStatus" class="text-sm font-bold text-emerald-600 mt-2 flex items-center">
                                 <i class="fa-solid fa-chart-line mr-2"></i> Stable
                             </p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 sm:col-span-2">
-                            <span class="text-xs font-semibold text-slate-500 uppercase">Mata Pelajaran Unggulan</span>
-                            <p id="bestSubject" class="text-lg font-bold text-slate-800 mt-1">-</p>
                         </div>
                     </div>
                 </div>
@@ -221,7 +193,7 @@
                     <h2 class="text-xl font-bold text-slate-900">Kelola Data Siswa & Nilai TO TKA</h2>
                     <p class="text-sm text-slate-500">Tambah, ubah, atau hapus data nilai siswa secara manual.</p>
                 </div>
-                <button onclick="openFormModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow transition flex items-center space-x-2 text-sm">
+                <button onclick="openFormModal(false)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow transition flex items-center space-x-2 text-sm">
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Tambah Data Siswa</span>
                 </button>
@@ -312,18 +284,6 @@
                 <!-- FORM SCORES TO -->
                 <div class="space-y-4 border-t pt-4">
                     <h4 class="font-bold text-slate-800 text-sm">Input Nilai Try Out (0-100)</h4>
-                    
-                    <!-- REPEATABLE TO INPUTS -->
-                    <script>
-                        const TO_KEYS = [
-                            { key: 'to1', name: 'TO TKA MKKS 1' },
-                            { key: 'to2', name: 'TO TKA DIKPORA 1' },
-                            { key: 'to3', name: 'TO TKA MKKS 2' },
-                            { key: 'to4', name: 'TO TKA DIKPORA 2' },
-                            { key: 'to5', name: 'TO TKA MKKS DIY' }
-                        ];
-                    </script>
-
                     <div id="toFormInputs" class="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
                         <!-- Rendered by JS -->
                     </div>
@@ -343,15 +303,24 @@
         let isAdminLoggedIn = false;
 
         window.onload = function() {
-            if (IS_PREVIEW) {
-                document.getElementById('previewBadge').classList.remove('hidden');
-                currentSiswaList = DUMMY_DATA;
-                renderAdminTable();
-            } else {
-                fetchSiswaData();
-            }
             renderFormToInputs();
+            fetchSiswaData();
         };
+
+        function parseScoreVal(val) {
+            if (!val && val !== 0) return 0;
+            const cleanStr = String(val).replace(',', '.');
+            const num = parseFloat(cleanStr);
+            return isNaN(num) ? 0 : num;
+        }
+
+        function checkGasConfig() {
+            if (!GAS_URL || GAS_URL === "URL_DEPLOY_GAS_ANDA_DISINI") {
+                showAlert("URL WebApp GAS belum dikonfigurasi! Harap ganti <code>GAS_URL</code> dengan URL WebApp yang benar.", "error");
+                return false;
+            }
+            return true;
+        }
 
         function showAlert(msg, type = 'info') {
             const el = document.getElementById('alertContainer');
@@ -376,22 +345,28 @@
         // SEARCH SISWA
         function handleSearch(e) {
             e.preventDefault();
+            if (!checkGasConfig()) return;
             const nisn = document.getElementById('nisnInput').value.trim();
             if (!nisn) return;
 
-            if (IS_PREVIEW) {
-                const found = currentSiswaList.find(s => s.nisn === nisn);
-                if (found) displayResult(found);
-                else showAlert("Data NISN tidak ditemukan dalam Pratinjau!", "error");
-            } else {
-                fetch(GAS_URL + "?action=getSiswaByNisn&nisn=" + encodeURIComponent(nisn))
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.success && res.data) displayResult(res.data);
-                        else showAlert(res.message || "Data NISN tidak ditemukan!", "error");
-                    })
-                    .catch(() => showAlert("Gagal terhubung ke Server GAS", "error"));
-            }
+            document.getElementById('searchBtn').disabled = true;
+            document.getElementById('searchBtn').innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mencari...</span>`;
+
+            fetch(`${GAS_URL}?action=getSiswaByNisn&nisn=${encodeURIComponent(nisn)}`)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success && res.data) {
+                        displayResult(res.data);
+                    } else {
+                        showAlert(res.message || "Data NISN tidak ditemukan!", "error");
+                        document.getElementById('resultCard').classList.add('hidden');
+                    }
+                })
+                .catch(() => showAlert("Gagal terhubung ke Server GAS", "error"))
+                .finally(() => {
+                    document.getElementById('searchBtn').disabled = false;
+                    document.getElementById('searchBtn').innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> <span>Cari Hasil</span>`;
+                });
         }
 
         function displayResult(siswa) {
@@ -402,47 +377,34 @@
             tbody.innerHTML = '';
 
             let maxAvg = 0;
-            let totalScores = { indo: 0, mat: 0, ing: 0, ipa: 0 };
-            let count = 0;
-
             const mapels = ['to1', 'to2', 'to3', 'to4', 'to5'];
             const names = ['TO TKA MKKS 1', 'TO TKA DIKPORA 1', 'TO TKA MKKS 2', 'TO TKA DIKPORA 2', 'TO TKA MKKS DIY'];
 
             mapels.forEach((key, idx) => {
                 const s = siswa.scores[key] || { indo: 0, mat: 0, ing: 0, ipa: 0 };
-                const total = s.indo + s.mat + s.ing + s.ipa;
+                const nIndo = parseScoreVal(s.indo);
+                const nMat = parseScoreVal(s.mat);
+                const nIng = parseScoreVal(s.ing);
+                const nIpa = parseScoreVal(s.ipa);
+
+                const total = nIndo + nMat + nIng + nIpa;
                 const avg = total / 4;
                 if (avg > maxAvg) maxAvg = avg;
-
-                totalScores.indo += s.indo;
-                totalScores.mat += s.mat;
-                totalScores.ing += s.ing;
-                totalScores.ipa += s.ipa;
-                count++;
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b">
                         <td class="p-3.5 font-semibold text-slate-800">${names[idx]}</td>
-                        <td class="p-3.5 text-center">${s.indo}</td>
-                        <td class="p-3.5 text-center">${s.mat}</td>
-                        <td class="p-3.5 text-center">${s.ing}</td>
-                        <td class="p-3.5 text-center">${s.ipa}</td>
-                        <td class="p-3.5 text-center font-bold bg-slate-50">${total}</td>
-                        <td class="p-3.5 text-center font-bold text-indigo-600 bg-slate-50">${avg.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-mono">${nIndo.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-mono">${nMat.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-mono">${nIng.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-mono">${nIpa.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-bold bg-slate-50 font-mono">${total.toFixed(2)}</td>
+                        <td class="p-3.5 text-center font-bold text-indigo-600 bg-slate-50 font-mono">${avg.toFixed(2)}</td>
                     </tr>
                 `;
             });
 
             document.getElementById('maxAvgScore').innerText = maxAvg.toFixed(2);
-            
-            // MAPEL TERBAIK
-            let bestMapel = 'Bahasa Indonesia';
-            let maxVal = totalScores.indo;
-            if (totalScores.mat > maxVal) { bestMapel = 'Matematika'; maxVal = totalScores.mat; }
-            if (totalScores.ing > maxVal) { bestMapel = 'Bahasa Inggris'; maxVal = totalScores.ing; }
-            if (totalScores.ipa > maxVal) { bestMapel = 'IPA'; maxVal = totalScores.ipa; }
-            document.getElementById('bestSubject').innerText = `${bestMapel} (Total: ${maxVal})`;
-
             document.getElementById('resultCard').classList.remove('hidden');
         }
 
@@ -452,29 +414,24 @@
 
         function handleLogin(e) {
             e.preventDefault();
+            if (!checkGasConfig()) return;
+
             const u = document.getElementById('loginUser').value;
             const p = document.getElementById('loginPass').value;
 
-            if (IS_PREVIEW) {
-                if (u === 'admin' && p === 'edudigital') {
+            fetch(`${GAS_URL}?action=loginAdmin`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ username: u, password: p })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
                     isAdminLoggedIn = true;
                     onLoginSuccess();
-                } else {
-                    showAlert("Username/Password Dummy Salah! (Gunakan: admin / edudigital)", "error");
-                }
-            } else {
-                fetch(GAS_URL + "?action=loginAdmin", {
-                    method: 'POST',
-                    body: JSON.stringify({ username: u, password: p })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success) {
-                        isAdminLoggedIn = true;
-                        onLoginSuccess();
-                    } else showAlert(res.message, "error");
-                });
-            }
+                } else showAlert(res.message, "error");
+            })
+            .catch(() => showAlert("Gagal terhubung ke Server GAS", "error"));
         }
 
         function onLoginSuccess() {
@@ -482,6 +439,7 @@
             document.getElementById('navAdminBtn').classList.add('hidden');
             document.getElementById('navLogoutBtn').classList.remove('hidden');
             switchTab('admin');
+            fetchSiswaData();
             showAlert("Berhasil Login Administrator!", "success");
         }
 
@@ -504,19 +462,19 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             <div>
                                 <label class="block text-[10px] text-slate-500">B. Indo</label>
-                                <input type="number" id="${item.key}_indo" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                                <input type="number" step="0.01" id="${item.key}_indo" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
                             </div>
                             <div>
                                 <label class="block text-[10px] text-slate-500">Matematika</label>
-                                <input type="number" id="${item.key}_mat" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                                <input type="number" step="0.01" id="${item.key}_mat" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
                             </div>
                             <div>
                                 <label class="block text-[10px] text-slate-500">B. Inggris</label>
-                                <input type="number" id="${item.key}_ing" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                                <input type="number" step="0.01" id="${item.key}_ing" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
                             </div>
                             <div>
                                 <label class="block text-[10px] text-slate-500">IPA</label>
-                                <input type="number" id="${item.key}_ipa" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
+                                <input type="number" step="0.01" id="${item.key}_ipa" min="0" max="100" value="0" class="w-full p-1.5 border rounded text-sm text-center">
                             </div>
                         </div>
                     </div>
@@ -528,6 +486,10 @@
         function renderAdminTable() {
             const tbody = document.getElementById('adminTableBody');
             tbody.innerHTML = '';
+            if (currentSiswaList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">Belum ada data siswa di database.</td></tr>`;
+                return;
+            }
             currentSiswaList.forEach(s => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50">
@@ -535,7 +497,7 @@
                         <td class="p-4 font-medium">${s.nama}</td>
                         <td class="p-4 text-slate-500">${s.sekolah}</td>
                         <td class="p-4 text-center">
-                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Lengkap</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Tersimpan</span>
                         </td>
                         <td class="p-4 text-right space-x-2">
                             <button onclick="editSiswa('${s.nisn}')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-xs border border-indigo-200 px-2.5 py-1 rounded-lg">Edit</button>
@@ -559,6 +521,17 @@
             document.getElementById('formIsEdit').value = isEdit;
             document.getElementById('formModalTitle').innerText = isEdit ? 'Edit Data Siswa & Nilai' : 'Tambah Data Siswa & Nilai';
             document.getElementById('formNisn').disabled = isEdit;
+            if (!isEdit) {
+                document.getElementById('formNisn').value = '';
+                document.getElementById('formNama').value = '';
+                document.getElementById('formSekolah').value = '';
+                TO_KEYS.forEach(item => {
+                    document.getElementById(`${item.key}_indo`).value = 0;
+                    document.getElementById(`${item.key}_mat`).value = 0;
+                    document.getElementById(`${item.key}_ing`).value = 0;
+                    document.getElementById(`${item.key}_ipa`).value = 0;
+                });
+            }
             document.getElementById('formModal').classList.remove('hidden');
         }
 
@@ -578,86 +551,75 @@
                 document.getElementById(`${item.key}_ing`).value = sc.ing;
                 document.getElementById(`${item.key}_ipa`).value = sc.ipa;
             });
-
             openFormModal(true);
         }
 
         function handleSaveSiswa(e) {
             e.preventDefault();
+            if (!checkGasConfig()) return;
+
             const nisn = document.getElementById('formNisn').value;
             const nama = document.getElementById('formNama').value;
             const sekolah = document.getElementById('formSekolah').value;
-            const isEdit = document.getElementById('formIsEdit').value === 'true';
 
             const scores = {};
             TO_KEYS.forEach(item => {
                 scores[item.key] = {
-                    indo: parseFloat(document.getElementById(`${item.key}_indo`).value) || 0,
-                    mat: parseFloat(document.getElementById(`${item.key}_mat`).value) || 0,
-                    ing: parseFloat(document.getElementById(`${item.key}_ing`).value) || 0,
-                    ipa: parseFloat(document.getElementById(`${item.key}_ipa`).value) || 0
+                    indo: parseScoreVal(document.getElementById(`${item.key}_indo`).value),
+                    mat: parseScoreVal(document.getElementById(`${item.key}_mat`).value),
+                    ing: parseScoreVal(document.getElementById(`${item.key}_ing`).value),
+                    ipa: parseScoreVal(document.getElementById(`${item.key}_ipa`).value)
                 };
             });
 
             const payload = { nisn, nama, sekolah, scores };
 
-            if (IS_PREVIEW) {
-                if (isEdit) {
-                    const idx = currentSiswaList.findIndex(x => x.nisn === nisn);
-                    if (idx !== -1) currentSiswaList[idx] = payload;
-                } else {
-                    currentSiswaList.push(payload);
-                }
-                renderAdminTable();
-                closeFormModal();
-                showAlert("Data berhasil disimpan (Preview Mode)", "success");
-            } else {
-                fetch(GAS_URL + "?action=saveSiswa", {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success) {
-                        fetchSiswaData();
-                        closeFormModal();
-                        showAlert("Data siswa berhasil disimpan!", "success");
-                    } else showAlert(res.message, "error");
-                });
-            }
+            fetch(`${GAS_URL}?action=saveSiswa`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    fetchSiswaData();
+                    closeFormModal();
+                    showAlert("Data siswa berhasil disimpan ke Google Sheets!", "success");
+                } else showAlert(res.message, "error");
+            })
+            .catch(() => showAlert("Gagal menyimpan data ke Server GAS", "error"));
         }
 
         function deleteSiswa(nisn) {
+            if (!checkGasConfig()) return;
             if (!confirm(`Yakin ingin menghapus data siswa NISN: ${nisn}?`)) return;
 
-            if (IS_PREVIEW) {
-                currentSiswaList = currentSiswaList.filter(x => x.nisn !== nisn);
-                renderAdminTable();
-                showAlert("Data siswa berhasil dihapus (Preview Mode)", "info");
-            } else {
-                fetch(GAS_URL + "?action=deleteSiswa", {
-                    method: 'POST',
-                    body: JSON.stringify({ nisn })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success) {
-                        fetchSiswaData();
-                        showAlert("Data siswa dihapus!", "success");
-                    } else showAlert(res.message, "error");
-                });
-            }
+            fetch(`${GAS_URL}?action=deleteSiswa`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ nisn })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    fetchSiswaData();
+                    showAlert("Data siswa berhasil dihapus!", "success");
+                } else showAlert(res.message, "error");
+            })
+            .catch(() => showAlert("Gagal menghapus data di Server GAS", "error"));
         }
 
         function fetchSiswaData() {
-            fetch(GAS_URL + "?action=getAllSiswa")
+            if (!GAS_URL || GAS_URL === "URL_DEPLOY_GAS_ANDA_DISINI") return;
+            fetch(`${GAS_URL}?action=getAllSiswa`)
                 .then(res => res.json())
                 .then(res => {
                     if (res.success) {
                         currentSiswaList = res.data;
-                        renderAdminTable();
+                        if (isAdminLoggedIn) renderAdminTable();
                     }
-                });
+                })
+                .catch(() => {});
         }
     </script>
 </body>
